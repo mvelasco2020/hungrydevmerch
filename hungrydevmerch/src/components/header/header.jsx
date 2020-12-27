@@ -6,7 +6,7 @@ import React from 'react'
 const Header = () => {
     return (
         <div className="header">
-            <Link logo-container to='/'>
+            <Link className='logo-container' to='/'>
                 <Logo className='logo' />
             </Link>
             <div className="options">
@@ -18,3 +18,4 @@ const Header = () => {
 }
 
 export default Header
+  
