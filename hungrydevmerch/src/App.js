@@ -20,6 +20,7 @@ class App extends React.Component {
 
     unsubscribeFromAuth = null;
 
+    // 
     componentDidMount() {
         this.unsubscribeFromAuth = auth.onAuthStateChanged((user) => {
             this.setState({
@@ -37,7 +38,7 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <Header />
+                <Header currentUser={this.state.currentUser}/>
                 <Switch>
                     <Route exact path='/' component={Homepage} />
                     <Route path='/shop' component={ShopPage} />
