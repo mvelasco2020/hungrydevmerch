@@ -1,0 +1,9 @@
+install redux, react-redux, redux-logger
+import Provider in index.js,wrap all components in Provider.
+create root-reducer.js - represents all state in applcation
+create individual reducer js files , then import onto the root
+create store.js, import from redux
+import store onto index.jx and pass it to the provider
+create action
+
+store<--root-reducer<---individual-reducers<--individual-actions
