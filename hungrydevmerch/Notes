@@ -1,7 +1,7 @@
 -install redux, react-redux, redux-logger
 -import Provider in index.js,wrap all components in Provider.
 -create root-reducer.js - represents all state in applcation
--create individual reducer js files , then import onto the root
+-create individual reducer.js files , then import onto the root
 -create store.js, import from redux
 -import store onto index.jx and pass it to the provider
 -create action
@@ -14,6 +14,11 @@ mappings - state.(from Root-Reducer property).(from individual-reducer return pr
 create mapDispatchToProps  = (dispatch) =>({actionName: dispatch(action(payload))})
 connect(null,mapDispatchToProps)(App). remove constructor, change the this.setState 
 to this.props.Action({data:})
+
+-import the action to the component that will set or toggle the action,
+import the connect from react-redux like from previous step
+
+
 
 store<--root-reducer<---individual-reducers
 <--individual-actions<--mappings<--dispatcher
