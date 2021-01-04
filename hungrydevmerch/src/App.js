@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 
 import "./App.css";
 import Homepage from "./pages/homepage/homepage.jsx";
@@ -7,8 +7,8 @@ import ShopPage from './pages/shop/shoppage.jsx'
 import Header from './components/header/header.jsx'
 import SignInSignUp from './pages/signin-signup/signin-signup.jsx'
 
-import {connect} from 'react-redux'
-import {setCurrentUser} from './redux/user/user.actions'
+import { connect } from 'react-redux'
+import { setCurrentUser } from './redux/user/user.actions'
 
 import { auth, createUserProfileDocument } from '../src/firebase/firebase.utils'
 
@@ -25,15 +25,15 @@ class App extends React.Component {
                 //when listen to snapshot changes,assign user to current user state
                 userRef.onSnapshot((snapShot) => {
                     this.props.setCurrentUser({
-                            id: snapShot.id,
-                            ...snapShot.data()
+                        id: snapShot.id,
+                        ...snapShot.data()
                     })
                 })
             }
 
             //when the user logs out, since we are subscribed
             //via onAuthStateChanged. set the current user state to null
-            else{
+            else {
                 this.props.setCurrentUser(userAuth)
             }
         })
@@ -47,21 +47,30 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <Header/>
+                <Header />
                 <Switch>
                     <Route exact path='/' component={Homepage} />
                     <Route path='/shop' component={ShopPage} />
-                    <Route path='/signin' component={SignInSignUp} />
+                    <Route exact path='/signin'
+                        render={() => this.props.currentUser ?
+                            (<Redirect to='/' />) :
+                            (<SignInSignUp />)} />
                 </Switch>
             </div>
         );
     }
 }
 
+//get state from store.
+//combinedReducers
+const mapStateToProps = ({ user }) => ({
+    currentUser: user.currentUser
+})
+
 //mapDispatchToProps  = (dispatch) =>({actionName: dispatch(action(payload))})
 const mapDispatchToProps = (dispatch) => ({
-setCurrentUser: user => dispatch(setCurrentUser(user))
+    setCurrentUser: user => dispatch(setCurrentUser(user))
 });
 
-//first arg is null bec this no longer need the currentUser state anymore
-export default connect(null, mapDispatchToProps)(App);
+//connect(currentstate, newstate)(app)
+export default connect(mapStateToProps, mapDispatchToProps)(App);
