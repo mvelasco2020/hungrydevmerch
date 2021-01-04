@@ -7,16 +7,12 @@ import ShopPage from './pages/shop/shoppage.jsx'
 import Header from './components/header/header.jsx'
 import SignInSignUp from './pages/signin-signup/signin-signup.jsx'
 
+import {connect} from 'react-redux'
+import {setCurrentUser} from './redux/user/user.actions'
+
 import { auth, createUserProfileDocument } from '../src/firebase/firebase.utils'
 
 class App extends React.Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            currentUser: null
-        }
-    }
 
     unsubscribeFromAuth = null;
 
@@ -28,11 +24,9 @@ class App extends React.Component {
                 const userRef = await createUserProfileDocument(userAuth);
                 //when listen to snapshot changes,assign user to current user state
                 userRef.onSnapshot((snapShot) => {
-                    this.setState({
-                        currentUser: {
+                    this.props.setCurrentUser({
                             id: snapShot.id,
                             ...snapShot.data()
-                        }
                     })
                 })
             }
@@ -40,14 +34,12 @@ class App extends React.Component {
             //when the user logs out, since we are subscribed
             //via onAuthStateChanged. set the current user state to null
             else{
-                this.setState({
-                    currentUser: userAuth
-                })
+                this.props.setCurrentUser(userAuth)
             }
         })
-    } s
+    }
 
-    //close subscription to avoid memory leak
+    //close subscription to avoid memory leak by assigning auth to null
     componentWillUnmount() {
         this.unsubscribeFromAuth();
     }
@@ -55,7 +47,7 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <Header currentUser={this.state.currentUser} />
+                <Header/>
                 <Switch>
                     <Route exact path='/' component={Homepage} />
                     <Route path='/shop' component={ShopPage} />
@@ -65,4 +57,11 @@ class App extends React.Component {
         );
     }
 }
-export default App;
+
+//mapDispatchToProps  = (dispatch) =>({actionName: dispatch(action(payload))})
+const mapDispatchToProps = (dispatch) => ({
+setCurrentUser: user => dispatch(setCurrentUser(user))
+});
+
+//first arg is null bec this no longer need the currentUser state anymore
+export default connect(null, mapDispatchToProps)(App);
