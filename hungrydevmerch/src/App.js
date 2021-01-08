@@ -72,5 +72,5 @@ const mapDispatchToProps = (dispatch) => ({
     setCurrentUser: user => dispatch(setCurrentUser(user))
 });
 
-//connect(currentstate, newstate)(app)
+//connect(state, dispatchaction)(app)
 export default connect(mapStateToProps, mapDispatchToProps)(App);
