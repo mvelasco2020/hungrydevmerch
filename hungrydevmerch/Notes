@@ -18,7 +18,20 @@ to this.props.Action({data:})
 -import the action to the component that will set or toggle the action,
 import the connect from react-redux like from previous step
 
-
-
 store<--root-reducer<---individual-reducers
 <--individual-actions<--mappings<--dispatcher
+
+##Create Selectors so things dont get re-rendered when an unrelated state change occurs
+we only want to get a slice of the state
+-install reselect
+create .Selectors.js in redux folder 
+-import {createSelector} from 'reselect'
+-const selectCart = (state) => state.reducerProp;
+-export a function that returns a function that takes a state as an array of state 
+as an input, second argument as a callback function to define what to return
+export const selectCartItems = createSelector([selectCart], 
+                                            cart => cart.cartItems)
+import selectCartItems to componenent and in to
+mapStateToProps, pass entire state to mapStateToProps and 
+pass state to selectCartItems for the prop.
+
