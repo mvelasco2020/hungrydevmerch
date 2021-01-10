@@ -11,9 +11,7 @@ export const addItemToCart = (cartItems, itemToAdd) => {
         })
         return newCartItems
     }
-
     else {
-        console.log('no item found')
         return [...cartItems, { ...itemToAdd, quantity: 1 }]
     }
 }
