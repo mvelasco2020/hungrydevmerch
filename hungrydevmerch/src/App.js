@@ -9,6 +9,7 @@ import SignInSignUp from './pages/signin-signup/signin-signup.jsx'
 
 import { connect } from 'react-redux'
 import { setCurrentUser } from './redux/user/user.actions'
+import {selectCurrentUser} from './redux/user/user.selectors'
 
 import { auth, createUserProfileDocument } from '../src/firebase/firebase.utils'
 
@@ -63,8 +64,8 @@ class App extends React.Component {
 
 //get state from store.
 //combinedReducers
-const mapStateToProps = ({ user }) => ({
-    currentUser: user.currentUser
+const mapStateToProps = (state) => ({
+    currentUser: selectCurrentUser(state)
 })
 
 //mapDispatchToProps  = (dispatch) =>({actionName: dispatch(action(payload))})

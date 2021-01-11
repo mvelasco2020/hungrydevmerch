@@ -10,6 +10,16 @@
 create mappings to get state from the store as props
 mappings - state.(from Root-Reducer property).(from individual-reducer return property)
 
+const mapStateToProps = ({  RootReducerProp}) => ({
+    reducerProp: RootReducerProp.reducerProp
+})
+
+i.e
+const mapStateToProps = ({ user }) => ({
+    currentUser: user.currentUser
+})
+
+
 -in app.js import connect from react-redux,import action, 
 create mapDispatchToProps  = (dispatch) =>({actionName: dispatch(action(payload))})
 connect(null,mapDispatchToProps)(App). remove constructor, change the this.setState 
@@ -34,4 +44,8 @@ export const selectCartItems = createSelector([selectCart],
 import selectCartItems to componenent and in to
 mapStateToProps, pass entire state to mapStateToProps and 
 pass state to selectCartItems for the prop.
+-if multiple select is used in a component, we can use createStructuredSelector
+in mamStateToProps
+mamStateToProps = createStructuredSelector({prop: selector, prop: selector})
+
 
