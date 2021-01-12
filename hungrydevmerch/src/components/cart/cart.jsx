@@ -8,8 +8,10 @@ import { withRouter } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 import { selectCartItems } from '../../redux/cart/cart.selectors'
+import { toggleCartHidden } from '../../redux/cart/cart.actions'
 
-const Cart = ({ cartItems, history }) => {
+
+const Cart = ({ cartItems, history, dispatch }) => {
     return (
         <div className='cart-dropdown'>
             <div className="cart-items">
@@ -23,7 +25,10 @@ const Cart = ({ cartItems, history }) => {
                 }
             </div>
             <CustomButton
-                onClick={() => history.push('/checkout')}>
+                onClick={() => {
+                    dispatch(toggleCartHidden())
+                    history.push('/checkout')
+                }}>
                 Check Out
             </CustomButton>
         </div>
