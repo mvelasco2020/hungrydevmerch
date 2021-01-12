@@ -11,6 +11,10 @@
     right: 40px;
     z-index: 5;
   
+    .empty-message{
+      font-size: 18px;
+      margin: 50px auto;
+    }
     .cart-items {
       height: 240px;
       display: flex;
@@ -22,6 +26,7 @@
         background-color: rgba(179, 179, 179, 0.095);
       }
       &::-webkit-scrollbar-thumb{
+        width: 3px;
         background-color: rgba(179, 179, 179, 0.789);
       }
     }
