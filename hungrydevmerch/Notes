@@ -49,3 +49,23 @@ in mamStateToProps
 mamStateToProps = createStructuredSelector({prop: selector, prop: selector})
 
 
+##Redux persistence
+redix-resist is a lib to save state to session or local storage
+-install redux-persist
+-import {persistStore} from 'redux-persist' in store.js
+const persistor = persistStore(store)
+default export {store, persistor}
+-in root-reducer.js, import {persistReducer} from 'redux-persist'
+import {storage} from 'redux-persist/lib/storage' this will be for local storage
+create const persistConfig = {
+    key: 'root',
+    storage,
+    whitelist: ['cart']
+}
+change defualt export to 
+export defualt 
+-in index.js, import {PersistGate} from 'redux-persist/integration/react'
+import {store, persistor} from "./redux/store"
+wrap App with <PersistGate persistence={persistor}>
+
+
